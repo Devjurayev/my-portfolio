@@ -1,0 +1,664 @@
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Nusratbek Jurayev — Full Stack Developer, Buxoro">
+<title>Nusratbek Jurayev — Full Stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#07070c;--s2:#10101a;--s3:#141420;
+  --border:#1a1a2e;--border2:#252540;
+  --p:#6d55f5;--p2:#9b87f7;--c:#00cfff;
+  --txt:#eeeef5;--txt2:#a0a0b8;--txt3:#606078;
+  --card:#0c0c16;--radius:12px;--nav-h:64px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;overflow-x:hidden;line-height:1.6}
+a{color:inherit;text-decoration:none}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:linear-gradient(rgba(109,85,245,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(109,85,245,.03) 1px,transparent 1px);
+  background-size:40px 40px;pointer-events:none;z-index:0;
+}
+#glow-orb{
+  position:fixed;width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(109,85,245,.07),transparent 70%);
+  pointer-events:none;transform:translate(-50%,-50%);z-index:0;
+}
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 3rem;height:var(--nav-h);
+  background:rgba(7,7,12,.9);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.brand{font-family:'JetBrains Mono',monospace;font-size:.95rem;font-weight:700;color:var(--p2)}
+.brand span{color:var(--c)}
+.nav-links{display:flex;gap:2.2rem;list-style:none}
+.nav-links a{font-size:.82rem;font-weight:500;color:var(--txt2);letter-spacing:.04em;transition:color .2s}
+.nav-links a:hover{color:var(--txt)}
+.nav-contact{background:var(--p);color:#fff;padding:.42rem 1.1rem;border-radius:6px;font-size:.82rem;font-weight:600;transition:all .2s}
+.nav-contact:hover{background:#5d46e0;transform:translateY(-1px)}
+.nav-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--txt2);border-radius:2px;transition:all .3s}
+.nav-toggle.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.mobile-drawer{
+  display:none;position:fixed;top:var(--nav-h);left:0;right:0;
+  background:rgba(7,7,12,.97);backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);z-index:199;
+  padding:1.5rem 2rem 2rem;
+  transform:translateY(-110%);transition:transform .3s ease;
+}
+.mobile-drawer.open{transform:translateY(0)}
+.mobile-drawer ul{list-style:none;display:flex;flex-direction:column;gap:.25rem;margin-bottom:1.5rem}
+.mobile-drawer ul a{display:block;padding:.75rem .5rem;font-size:1rem;font-weight:500;color:var(--txt2);border-bottom:1px solid var(--border);transition:color .2s}
+.mobile-drawer ul a:hover{color:var(--txt)}
+.mob-contact{display:block;width:100%;text-align:center;background:var(--p);color:#fff;padding:.85rem;border-radius:8px;font-weight:700;font-size:.95rem}
+#hero{
+  position:relative;min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:calc(var(--nav-h) + 4rem) 2rem 4rem;
+  z-index:1;text-align:center;
+}
+.hero-name{font-size:clamp(2.8rem,10vw,7rem);font-weight:900;line-height:.95;letter-spacing:-.05em;margin-bottom:1.25rem}
+.hero-name .f{display:block;color:var(--txt)}
+.hero-name .l{display:block}
+.hero-name .l span{
+  color:transparent;
+  background:linear-gradient(135deg,var(--p),var(--c));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-role{font-family:'JetBrains Mono',monospace;font-size:clamp(.85rem,2.5vw,1rem);color:var(--p2);margin-bottom:.85rem;min-height:1.5em}
+.hero-role::before{content:'> ';color:var(--txt3)}
+.cursor{display:inline-block;width:2px;height:1em;background:var(--p2);margin-left:2px;animation:cur .7s step-end infinite;vertical-align:middle}
+@keyframes cur{0%,100%{opacity:1}50%{opacity:0}}
+.hero-desc{font-size:clamp(.9rem,2.5vw,1.05rem);color:var(--txt2);max-width:500px;margin:0 auto 2.5rem;line-height:1.75}
+.hero-btns{display:flex;gap:.85rem;justify-content:center;margin-bottom:3.5rem;flex-wrap:wrap}
+.btn-prim{
+  background:linear-gradient(135deg,var(--p),#4d3bcc);color:#fff;
+  padding:.8rem 1.75rem;border-radius:8px;font-weight:700;font-size:.93rem;
+  transition:all .25s;border:none;cursor:pointer;display:inline-block;
+  box-shadow:0 4px 24px rgba(109,85,245,.25);
+}
+.btn-prim:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(109,85,245,.4)}
+.btn-sec{border:1px solid var(--border2);color:var(--txt2);padding:.8rem 1.75rem;border-radius:8px;font-weight:600;font-size:.93rem;transition:all .25s;background:transparent;display:inline-block}
+.btn-sec:hover{border-color:var(--c);color:var(--c)}
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;max-width:680px;width:100%}
+.stat-cell{background:var(--card);padding:1.25rem .75rem;text-align:center;border-right:1px solid var(--border)}
+.stat-cell:last-child{border-right:none}
+.stat-n{font-family:'JetBrains Mono',monospace;font-size:clamp(1.4rem,4vw,1.9rem);font-weight:700;color:var(--txt)}
+.stat-l{font-size:.65rem;color:var(--txt3);margin-top:.25rem;text-transform:uppercase;letter-spacing:.08em}
+.scroll-caret{margin-top:3rem;display:flex;flex-direction:column;align-items:center;gap:.5rem;color:var(--txt3);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase}
+.caret-icon{width:20px;height:20px;border-right:1.5px solid var(--txt3);border-bottom:1.5px solid var(--txt3);transform:rotate(45deg);animation:bob 1.8s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(5px)}}
+.sec{padding:6rem 3rem;max-width:1120px;margin:0 auto;position:relative;z-index:1}
+.sec-head{margin-bottom:3.5rem}
+.sec-eyebrow{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--p2);text-transform:uppercase;letter-spacing:.14em;margin-bottom:.5rem}
+.sec-title{font-size:clamp(1.8rem,5vw,2.8rem);font-weight:800;letter-spacing:-.03em;line-height:1.1}
+.sec-title em{font-style:normal;color:transparent;background:linear-gradient(135deg,var(--p),var(--c));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.sec-sub{color:var(--txt2);margin-top:.6rem;max-width:480px;font-size:.92rem}
+.hdivide{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:start}
+.about-text p{color:var(--txt2);line-height:1.85;margin-bottom:1.1rem;font-size:.95rem}
+.about-text p strong{color:var(--txt);font-weight:600}
+.about-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.75rem;font-family:'JetBrains Mono',monospace;font-size:.75rem;line-height:2}
+.ac-header{display:flex;gap:.4rem;margin-bottom:1rem}
+.dot{width:10px;height:10px;border-radius:50%}
+.dot-r{background:#ff5f57}.dot-y{background:#febc2e}.dot-g{background:#28c840}
+.ac-key{color:var(--p2)}.ac-str{color:var(--c)}.ac-num{color:#ffa94d}.ac-com{color:var(--txt3)}.ac-fn{color:#63e2b7}.ac-br{color:var(--txt2)}
+.skills-cats{display:flex;flex-direction:column;gap:2.5rem}
+.skill-group-title{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--txt3);font-weight:600;margin-bottom:1rem;padding-bottom:.45rem;border-bottom:1px solid var(--border)}
+.skill-icons-row{display:flex;flex-wrap:wrap;gap:.85rem}
+.skill-item{
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  background:var(--card);border:1px solid var(--border);
+  border-radius:10px;padding:1rem .8rem;width:84px;
+  transition:all .25s;cursor:default;
+}
+.skill-item:hover{border-color:var(--p);transform:translateY(-4px);background:var(--s3)}
+.skill-item svg{width:28px;height:28px}
+.skill-item span{font-size:.68rem;color:var(--txt2);text-align:center;font-weight:500}
+.skill-bar-wrap{width:52px;height:2px;background:var(--border);border-radius:1px;overflow:hidden}
+.skill-bar{height:100%;background:linear-gradient(90deg,var(--p),var(--c));border-radius:1px;transition:width 1s ease}
+.proj-filters{display:flex;gap:.45rem;margin-bottom:2.25rem;flex-wrap:wrap}
+.pf-btn{background:var(--card);border:1px solid var(--border);color:var(--txt2);padding:.38rem .95rem;border-radius:6px;font-size:.76rem;font-weight:500;cursor:pointer;transition:all .2s}
+.pf-btn.active,.pf-btn:hover{background:var(--p);border-color:var(--p);color:#fff}
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem}
+.proj-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.75rem;transition:all .3s;position:relative;overflow:hidden}
+.proj-card:hover{border-color:var(--border2);transform:translateY(-5px)}
+.proj-card::after{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;background:radial-gradient(circle at 50% 0%,rgba(109,85,245,.06),transparent 70%)}
+.proj-card:hover::after{opacity:1}
+.proj-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem}
+.proj-tur{background:var(--s3);border:1px solid var(--border);color:var(--txt2);font-size:.66rem;padding:.22rem .55rem;border-radius:4px;font-weight:500;letter-spacing:.04em}
+.proj-link-btn{width:28px;height:28px;border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--txt3);transition:all .2s}
+.proj-link-btn:hover{border-color:var(--p);color:var(--p)}
+.proj-name{font-size:1.05rem;font-weight:700;margin-bottom:.5rem;letter-spacing:-.01em}
+.proj-desc{color:var(--txt2);font-size:.83rem;line-height:1.7;margin-bottom:1.1rem}
+.proj-techs{display:flex;flex-wrap:wrap;gap:.35rem}
+.ptag{background:rgba(109,85,245,.08);border:1px solid rgba(109,85,245,.15);color:var(--p2);padding:.22rem .6rem;border-radius:4px;font-size:.7rem;font-family:'JetBrains Mono',monospace;font-weight:500}
+.timeline{position:relative;padding-left:2rem}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,var(--border),var(--border),transparent)}
+.tl-item{position:relative;padding:0 0 2.5rem 2rem}
+.tl-dot{position:absolute;left:-5px;top:4px;width:10px;height:10px;border-radius:50%;background:var(--p);border:2px solid var(--bg);box-shadow:0 0 0 2px var(--p)}
+.tl-year{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--p2);font-weight:700;margin-bottom:.3rem;letter-spacing:.06em}
+.tl-name{font-size:.97rem;font-weight:700;margin-bottom:.35rem}
+.tl-desc{color:var(--txt2);font-size:.85rem;line-height:1.65}
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1.1rem}
+.svc-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;transition:all .25s}
+.svc-card:hover{border-color:var(--border2);transform:translateY(-3px)}
+.svc-icon{width:42px;height:42px;background:rgba(109,85,245,.1);border:1px solid rgba(109,85,245,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;color:var(--p2)}
+.svc-name{font-size:.97rem;font-weight:700;margin-bottom:.45rem}
+.svc-desc{color:var(--txt2);font-size:.83rem;line-height:1.65}
+.contact-outer{display:grid;grid-template-columns:1fr 1fr;gap:1.75rem;align-items:stretch}
+.contact-left{display:flex;flex-direction:column;gap:1.1rem;height:100%}
+.contact-info-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.75rem;flex:1;display:flex;flex-direction:column}
+.ci-title{font-size:1.3rem;font-weight:800;letter-spacing:-.02em;margin-bottom:.6rem}
+.ci-title span{color:var(--p2)}
+.ci-sub{color:var(--txt2);font-size:.85rem;line-height:1.7;margin-bottom:1.25rem}
+.ci-row{display:flex;align-items:center;gap:.75rem;padding:.65rem 0;border-bottom:1px solid var(--border)}
+.ci-row:last-child{border-bottom:none}
+.ci-icon{width:34px;height:34px;background:var(--s3);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--p2)}
+.ci-label{font-size:.65rem;color:var(--txt3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.1rem}
+.ci-val{font-size:.85rem;color:var(--txt);font-weight:500}
+.ci-val a{transition:color .2s}.ci-val a:hover{color:var(--c)}
+.form-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2.25rem}
+.form-title{font-size:1.05rem;font-weight:700;margin-bottom:.35rem}
+.form-sub{font-size:.8rem;color:var(--txt2);margin-bottom:1.75rem}
+.form-row{margin-bottom:1.1rem}
+.form-row label{display:block;font-size:.7rem;font-weight:600;color:var(--txt2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.45rem}
+.form-row input,.form-row textarea{width:100%;background:var(--s3);border:1px solid var(--border);border-radius:8px;padding:.75rem .9rem;color:var(--txt);font-size:.88rem;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;resize:none;-webkit-appearance:none}
+.form-row input:focus,.form-row textarea:focus{border-color:var(--p)}
+.form-row input::placeholder,.form-row textarea::placeholder{color:var(--txt3)}
+.form-2col{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.form-submit{width:100%;background:linear-gradient(135deg,var(--p),#4d3bcc);color:#fff;border:none;padding:.95rem;border-radius:8px;font-weight:700;font-size:.93rem;cursor:pointer;transition:all .25s;font-family:'Inter',sans-serif}
+.form-submit:hover{transform:translateY(-1px);box-shadow:0 6px 30px rgba(109,85,245,.35)}
+.form-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.toast{display:none;margin-top:.9rem;padding:.85rem 1rem;border-radius:8px;font-size:.82rem;font-weight:500;text-align:center}
+.toast.ok{background:rgba(57,197,87,.1);border:1px solid rgba(57,197,87,.3);color:#39c557}
+.toast.err{background:rgba(255,80,80,.1);border:1px solid rgba(255,80,80,.3);color:#ff5050}
+footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2.5rem 3rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.25rem}
+.footer-brand{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--txt2)}
+.footer-brand span{color:var(--p2)}
+.footer-links{display:flex;gap:1.25rem}
+.footer-links a{color:var(--txt3);font-size:.8rem;transition:color .2s}
+.footer-links a:hover{color:var(--txt)}
+.footer-copy{color:var(--txt3);font-size:.75rem;font-family:'JetBrains Mono',monospace}
+.rv{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:translateY(0)}
+.rv-d2{transition-delay:.2s}
+@media(max-width:1024px){.sec{padding:5rem 2rem}nav{padding:0 2rem}}
+@media(max-width:768px){
+  .nav-links,nav .nav-contact{display:none}
+  .nav-toggle{display:flex}
+  .mobile-drawer{display:block}
+  nav{padding:0 1.25rem}
+  #hero{padding:calc(var(--nav-h) + 3rem) 1.25rem 3rem}
+  .hero-btns{flex-direction:column;align-items:center}
+  .hero-btns a{width:100%;max-width:280px;text-align:center}
+  .stats-bar{grid-template-columns:repeat(2,1fr)}
+  .stat-cell:nth-child(2){border-right:none}
+  .stat-cell:nth-child(1),.stat-cell:nth-child(2){border-bottom:1px solid var(--border)}
+  .sec{padding:4rem 1.25rem}
+  .about-grid{grid-template-columns:1fr;gap:2rem}
+  .skill-item{width:76px;padding:.85rem .65rem}
+  .proj-grid{grid-template-columns:1fr}
+  .contact-outer{grid-template-columns:1fr}
+  .form-2col{grid-template-columns:1fr}
+  footer{flex-direction:column;text-align:center;padding:2rem 1.25rem}
+}
+@media(max-width:400px){.hero-name{font-size:2.4rem}.stats-bar{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div id="glow-orb"></div>
+
+<nav>
+  <div class="brand">Jurayev<span>.dev</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">Haqimda</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Loyihalar</a></li>
+    <li><a href="#services">Xizmatlar</a></li>
+    <li><a href="#contact">Aloqa</a></li>
+  </ul>
+  <a href="#contact" class="nav-contact">Bog'lanish →</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menyu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-drawer" id="mobileDrawer">
+  <ul>
+    <li><a href="#about" class="mob-link">Haqimda</a></li>
+    <li><a href="#skills" class="mob-link">Skills</a></li>
+    <li><a href="#projects" class="mob-link">Loyihalar</a></li>
+    <li><a href="#services" class="mob-link">Xizmatlar</a></li>
+    <li><a href="#contact" class="mob-link">Aloqa</a></li>
+  </ul>
+  <a href="#contact" class="mob-contact mob-link">Bog'lanish →</a>
+</div>
+
+<section id="hero">
+  <h1 class="hero-name">
+    <span class="f">Nusratbek</span>
+    <span class="l"><span>Jurayev</span></span>
+  </h1>
+  <p class="hero-role"><span id="typed-role"></span><span class="cursor"></span></p>
+  <p class="hero-desc">Yosh Web dasturchi. Frontend va Telegram bot — ikkalasini ham yozaman. Sifatli kod — mening imzom.</p>
+  <div class="hero-btns">
+    <a href="#projects" class="btn-prim">Loyihalarni ko'rish</a>
+    <a href="https://t.me/only_jurayevv" class="btn-sec" target="_blank" rel="noopener">Telegram</a>
+  </div>
+  <div class="stats-bar">
+    <div class="stat-cell"><div class="stat-n">3+</div><div class="stat-l">Yillik tajriba</div></div>
+    <div class="stat-cell"><div class="stat-n">15+</div><div class="stat-l">Yaratilgan loyiha</div></div>
+    <div class="stat-cell"><div class="stat-n">12+</div><div class="stat-l">Texnologiya</div></div>
+    <div class="stat-cell"><div class="stat-n">100%</div><div class="stat-l">Sifat garovi</div></div>
+  </div>
+  <div class="scroll-caret"><span>Pastga</span><div class="caret-icon"></div></div>
+</section>
+
+<div class="hdivide"></div>
+
+<section class="sec rv" id="about">
+  <div class="about-grid">
+    <div class="about-text">
+      <div class="sec-head" style="margin-bottom:1.5rem">
+        <div class="sec-eyebrow">Haqimda</div>
+        <h2 class="sec-title">Men kimman<em>?</em></h2>
+      </div>
+      <p>Men Nusratbek Jurayev — Buxorolik 13 yoshli Frontend dasturchi. 2024 yildan boshlab dasturlash bilan shug'ullanaman. HTML/CSS dan boshlab, Telegram botlar va React frontend bilan murakkab loyihalar yarataman.</p>
+      <p>Kod yozishdan tashqari <strong>ochiq manba loyihalarga</strong> hissa qo'shaman va yangi texnologiyalarni doimiy o'rganib boraman. Maqsadim — har bir loyihani nafaqat ishlaydigan, balki <strong>tez, xavfsiz va chiroyli</strong> qilish.</p>
+      <p style="margin-top:1.5rem"><a href="#contact" class="btn-prim">Gaplashaylik →</a></p>
+    </div>
+    <div class="about-card rv rv-d2">
+      <div class="ac-header"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+      <span class="ac-com">// developer.php</span><br>
+      <span class="ac-fn">class</span> <span class="ac-key">Developer</span> <span class="ac-br">{</span><br>
+      &nbsp;&nbsp;<span class="ac-key">public</span> <span class="ac-fn">string</span> <span class="ac-str">$name</span> = <span class="ac-str">"Nusratbek Jurayev"</span>;<br>
+      &nbsp;&nbsp;<span class="ac-key">public</span> <span class="ac-fn">int</span> <span class="ac-str">$age</span> = <span class="ac-num">13</span>;<br>
+      &nbsp;&nbsp;<span class="ac-key">public</span> <span class="ac-fn">string</span> <span class="ac-str">$role</span> = <span class="ac-str">"Frontend"</span>;<br>
+      &nbsp;&nbsp;<span class="ac-key">public</span> <span class="ac-fn">array</span> <span class="ac-str">$focus</span> = [<span class="ac-str">"HTML"</span>, <span class="ac-str">"CSS"</span>, <span class="ac-str">"React"</span>];<br>
+      &nbsp;&nbsp;<span class="ac-key">public</span> <span class="ac-fn">bool</span> <span class="ac-str">$open</span> = <span class="ac-key">true</span>;<br>
+      <span class="ac-br">}</span>
+    </div>
+  </div>
+</section>
+
+<div class="hdivide"></div>
+
+<section class="sec rv" id="skills">
+  <div class="sec-head">
+    <div class="sec-eyebrow">Texnologiyalar</div>
+    <h2 class="sec-title">Tech <em>Stack</em></h2>
+    <p class="sec-sub">Hozirda faol ishlatadigan texnologiyalar</p>
+  </div>
+  <div class="skills-cats">
+    <div class="rv">
+      <div class="skill-group-title">Frontend</div>
+      <div class="skill-icons-row">
+        <div class="skill-item"><svg viewBox="0 0 128 128"><path fill="#E44D26" d="M19.037 113.876L9.032 1.661h109.936l-10.016 112.198-45.019 12.48z"/><path fill="#F16529" d="M64 116.8l36.378-10.086 8.559-95.878H64z"/><path fill="#EBEBEB" d="M64 52.455H45.788L44.53 38.361H64V24.599H29.854l.33 3.692 3.382 37.927H64zm0 35.743l-.061.017-15.327-4.14-.979-10.975H33.816l1.928 21.609 28.193 7.826.063-.017z"/><path fill="#fff" d="M63.952 52.455v13.763h16.947l-1.597 17.849-15.35 4.143v14.319l28.215-7.82.207-2.325 3.234-36.233.336-3.696h-3.708zm0-27.856v13.762h33.244l.276-3.092.628-6.978.329-3.692z"/></svg><span>HTML5</span><div class="skill-bar-wrap"><div class="skill-bar" data-w="95" style="width:0%"></div></div></div>
+        <div class="skill-item"><svg viewBox="0 0 128 128"><path fill="#1572B6" d="M18.814 114.123L8.76 1.352h110.48l-10.064 112.754-45.243 12.543-45.119-12.526z"/><path fill="#33A9DC" d="M64.001 117.062l36.559-10.136 8.601-96.354H64.001v106.49z"/><path fill="#fff" d="M64.001 51.429h18.302l1.264-14.163H64.001V23.435h34.682l-.332 3.711-3.4 38.114h-30.95V51.429z"/><path fill="#EBEBEB" d="M64.083 87.349l-.061.018-15.403-4.159-.985-11.031H33.752l1.937 21.717 28.331 7.863.063-.018v-14.39z"/><path fill="#fff" d="M81.127 64.675l-1.666 18.522-15.426 4.164v14.39l28.354-7.858.208-2.337 2.406-26.881H81.127z"/><path fill="#EBEBEB" d="M64.048 23.435v13.831H30.64l-.277-3.108-.63-7.012-.331-3.711h34.646zm-.047 27.994v13.831H49.277l-.277-3.108-.631-7.012-.33-3.711h15.962z"/></svg><span>CSS3</span><div class="skill-bar-wrap"><div class="skill-bar" data-w="90" style="width:0%"></div></div></div>
+        <div class="skill-item"><svg viewBox="0 0 128 128"><path fill="#F0DB4F" d="M1.408 1.408h125.184v125.185H1.408z"/><path fill="#323330" d="M116.347 96.736c-.917-5.711-4.641-10.508-15.672-14.981-3.832-1.761-8.104-3.022-9.377-5.926-.452-1.69-.512-2.642-.226-3.665.821-3.32 4.784-4.355 7.925-3.403 2.023.678 3.938 2.237 5.093 4.724 5.402-3.498 5.391-3.475 9.163-5.879-1.381-2.141-2.118-3.129-3.022-4.045-3.249-3.629-7.676-5.498-14.756-5.355l-3.688.477c-3.534.893-6.902 2.748-8.877 5.235-5.926 6.724-4.236 18.492 2.975 23.335 7.104 5.332 17.54 6.545 18.873 11.531 1.297 6.104-4.486 8.08-10.234 7.378-4.236-.881-6.592-3.034-9.139-6.949-4.688 2.713-4.688 2.713-9.508 5.485 1.143 2.499 2.344 3.63 4.26 5.795 9.068 9.198 31.76 8.746 35.83-5.176.165-.478 1.261-3.666.38-8.581zM69.462 58.943H57.753l-.048 30.272c0 6.438.333 12.34-.714 14.149-1.713 3.558-6.152 3.117-8.175 2.427-2.059-1.012-3.106-2.451-4.319-4.485-.333-.584-.583-1.036-.667-1.071l-9.52 5.83c1.583 3.249 3.915 6.069 6.902 7.901 4.462 2.678 10.459 3.499 16.731 2.059 4.082-1.189 7.604-3.652 9.448-7.401 2.666-4.915 2.094-10.864 2.07-17.444.06-10.735.001-21.468.001-32.237z"/></svg><span>JavaScript</span><div class="skill-bar-wrap"><div class="skill-bar" data-w="85" style="width:0%"></div></div></div>
+        <div class="skill-item"><svg viewBox="0 0 128 128"><path fill="#61DAFB" d="M64 31.57c-17.9 0-32.43 14.53-32.43 32.43S46.1 96.43 64 96.43s32.43-14.53 32.43-32.43S81.9 31.57 64 31.57zm0 56.86c-13.47 0-24.43-10.96-24.43-24.43S50.53 39.57 64 39.57s24.43 10.96 24.43 24.43S77.47 88.43 64 88.43z"/><path fill="#61DAFB" d="M64 8C41.7 8 23.27 22.28 16.76 41.8c-3.44-.7-6.71-1.07-9.76-1.07C3.13 40.73 0 42.22 0 44.53c0 1.68 1.62 3.42 4.55 4.87C1.82 54.6.27 59.25.27 64c0 4.75 1.55 9.4 4.28 14.6C1.62 80.06 0 81.79 0 83.47c0 2.31 3.13 3.8 7 3.8 3.05 0 6.32-.37 9.76-1.07C23.27 105.72 41.7 120 64 120s40.73-14.28 47.24-33.8c3.44.7 6.71 1.07 9.76 1.07 3.87 0 7-1.49 7-3.8 0-1.68-1.62-3.41-4.55-4.87C125.73 73.4 127.27 68.75 127.27 64c0-4.75-1.54-9.4-4.27-14.6 2.93-1.45 4.55-3.19 4.55-4.87 0-2.31-3.13-3.8-7-3.8-3.05 0-6.32.37-9.76 1.07C104.27 22.28 86.3 8 64 8zm0 8c19.54 0 36.5 12.29 43.56 29.75-4.55-.62-9.38-.95-14.31-.95-8.22 0-16.06 1.15-23.25 3.31-7.19-2.16-15.03-3.31-23.25-3.31-4.93 0-9.76.33-14.31.95C39.5 28.29 56.46 16 64 16zM27.44 43.69c7.63 0 14.96.96 21.63 2.73A99.44 99.44 0 0 0 37.68 64a99.44 99.44 0 0 0 11.39 17.58C42.4 83.35 35.07 84.31 27.44 84.31c-4.96 0-9.73-.49-14.03-1.38A55.94 55.94 0 0 1 8.27 64c0-6.86 1.25-13.44 3.52-19.52 4.56-.73 9.83-1.19 15.65-.79zm73.12 0c5.82-.4 11.09.06 15.65.79A55.94 55.94 0 0 1 119.73 64a55.94 55.94 0 0 1-5.14 18.93c-4.3.89-9.07 1.38-14.03 1.38-7.63 0-14.96-.96-21.63-2.73A99.44 99.44 0 0 0 90.32 64a99.44 99.44 0 0 0-11.39-17.58c6.67-1.77 14-2.73 21.63-2.73zM64 49.4A91.97 91.97 0 0 1 76.29 64 91.97 91.97 0 0 1 64 78.6 91.97 91.97 0 0 1 51.71 64 91.97 91.97 0 0 1 64 49.4zm0 62.6c-19.54 0-36.5-12.29-43.56-29.75 4.55.62 9.38.95 14.31.95 8.22 0 16.06-1.15 23.25-3.31 7.19 2.16 15.03 3.31 23.25 3.31 4.93 0 9.76-.33 14.31-.95C88.5 99.71 71.54 112 64 112z"/></svg><span>React</span><div class="skill-bar-wrap"><div class="skill-bar" data-w="80" style="width:0%"></div></div></div>
+        <div class="skill-item"><svg viewBox="0 0 128 128"><path d="M12.6 10.6h24.6v8.2H20.8v8.3h16.4v8.2H20.8v16.5h-8.2V10.6zm32.9 0h8.2v32.9h20.5v8.3H45.5V10.6zm41 0h8.7l16.4 41.2h-8.7l-3.7-9.9H77.5l-3.7 9.9H65l16.5-41.2zm-.6 23l-5.1-13.9-5.2 13.9h10.3zM12.6 68.7h15.4c7.8 0 12.8 4.5 12.8 11.4 0 4.7-2.5 8.2-6.5 10.1l8.2 13.8H33.3l-7.1-12.2h-5.4v12.2h-8.2V68.7zm8.2 8.2v7.8h6.8c3.1 0 4.9-1.6 4.9-3.9s-1.8-3.9-4.9-3.9h-6.8zm30.5-8.2h26.4v8.2H59.5v7.3h16.4v8.2H59.5v8.3h20.5v8.2H51.3V68.7zm37.1 0h15.4c10 0 16.8 6.6 16.8 20.6s-6.8 20.6-16.8 20.6H88.4V68.7zm8.2 8.2v24.7h6.8c5.3 0 8.7-4.1 8.7-12.4s-3.4-12.3-8.7-12.3h-6.8z" fill="#8993BE"/></svg><span>PHP</span><div class="skill-bar-wrap"><div class="skill-bar" data-w="88" style="width:0%"></div></div></div>
+      </div>
+    </div>
+    <div class="rv">
+      <div class="skill-group-title">DevTools</div>
+      <div class="skill-icons-row">
+        <div class="skill-item"><svg viewBox="0 0 128 128"><path fill="#F34F29" d="M124.737 58.378L69.621 3.264c-3.172-3.174-8.32-3.174-11.497 0L46.68 14.71l14.518 14.518c3.375-1.139 7.243-.375 9.932 2.314 2.703 2.706 3.461 6.607 2.294 9.993l13.992 13.993c3.385-1.167 7.292-.413 9.994 2.295 3.78 3.777 3.78 9.9 0 13.679a9.673 9.673 0 0 1-13.683 0 9.677 9.677 0 0 1-2.105-10.521L68.574 47.933l-.002 34.341a9.708 9.708 0 0 1 2.559 1.828c3.778 3.777 3.778 9.898 0 13.683-3.779 3.777-9.904 3.777-13.679 0-3.778-3.784-3.778-9.905 0-13.683a9.65 9.65 0 0 1 3.167-2.11V47.333a9.581 9.581 0 0 1-3.167-2.111c-2.862-2.86-3.551-7.06-2.083-10.576L41.056 20.333 3.265 58.123a8.123 8.123 0 0 0 0 11.5l55.117 55.114c3.172 3.174 8.317 3.174 11.488 0l54.866-54.868a8.135 8.135 0 0 0 .001-11.491z"/></svg><span>Git</span><div class="skill-bar-wrap"><div class="skill-bar" data-w="88" style="width:0%"></div></div></div>
+        <div class="skill-item"><svg viewBox="0 0 128 128"><path fill="#007ACC" d="M1.257 91.165L0 88.404V39.596l1.257-2.761L64 68.578z"/><path fill="#007ACC" d="M64 59.422L1.257 28.835.083 25.95 64 0l63.917 25.95-1.174 2.885z"/><path fill="#1C6EB5" d="M64 68.578l62.743-28.743L128 88.404l-1.257 2.761z"/><path fill="#2D8ACC" d="M64 128L.083 102.05l1.174-2.885L64 88.578l62.743 10.587 1.174 2.885z"/><path fill="#1C6EB5" d="M64 59.422L64 0l63.917 25.95-1.174 2.885z"/><path fill="#fff" d="M64 68.578v59.578l62.743-25.95 1.174-2.885z"/></svg><span>VS Code</span><div class="skill-bar-wrap"><div class="skill-bar" data-w="95" style="width:0%"></div></div></div>
+        <div class="skill-item"><svg viewBox="0 0 128 128"><path fill="#EBEBEB" d="M68.5 1.3C64.2 1.4 59.9 2.7 56 5.3c-.3.2-.7.4-1 .6l51.8 51.9c.2-.3.4-.6.6-.9C115.5 39 108.2 15 89.6 5.3c-6.5-3.4-13.8-4-21.1-4zm-31 10.1C26.2 19.5 19.4 31.7 21 45.1c.4 4.1 1.7 7.9 3.4 11.4L66.7 14c-9.1-2.5-19-.5-29.2-2.6zM6.1 69.1c-4.3 9.4-4.5 20.6 0 30.3 4.5 9.4 12.7 15.8 22 18.6l62.4-62.4c-3.4-1.7-7.3-3-11.4-3.4-13.5-1.7-25.7 5.2-33.7 16.3-2 2.8-2.1 2.8-4.4.5-1.8-1.8-3.6-3.6-5.3-5.4-.9-.9-1.7-1.7-2.5-2.5-9-8.6-18.7-4-27.1 8.1zm40.1 54.6c9.4 4.3 20.5 4.5 30.2 0 9.4-4.5 15.9-12.7 18.7-22.1L32.6 69.2c-1.8 3.4-3 7.3-3.5 11.4-1.6 13.5 5.1 25.8 17.1 43.1z"/></svg><span>Linux</span><div class="skill-bar-wrap"><div class="skill-bar" data-w="72" style="width:0%"></div></div></div>
+        <div class="skill-item"><svg viewBox="0 0 128 128"><path d="M44.422 37.578c-.62.018-1.26.148-1.844.426l-8.336 4.105L56.648 54.44l11.71-5.761-21.38-10.836a4.25 4.25 0 0 0-2.556-.265zm39.156 0a4.25 4.25 0 0 0-2.556.265L59.642 48.679l11.71 5.761 22.406-11.33-8.336-4.106a4.25 4.25 0 0 0-1.844-.426zM29 44.944v21.988c0 1.626.993 3.107 2.484 3.754l8.266 3.507V53.25zm70 0L91.25 53.25v20.943l8.266-3.507A4.18 4.18 0 0 0 102 66.932V44.944zM64 57.006l-11.5 5.658v12.297L64 80.38l11.5-5.419V62.664zm-20.5 8.26v13.048l-9.25-3.925V68zm41 0l9.25 3.383v2.39l-9.25 3.925zm-20.5 9.99v19.87l17.063-8.046 2.313-1.09V73.17zm-2 0l-19.375 9.734v12.926L61 73.256z" fill="#F24E1E"/><path d="M81.063 88.695v.002L64 97.125l-17.063-8.428v12.678l15.27 7.203c1.049.494 2.537.494 3.586 0l15.27-7.203z" fill="#FF7262"/></svg><span>Figma</span><div class="skill-bar-wrap"><div class="skill-bar" data-w="70" style="width:0%"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hdivide"></div>
+
+<section class="sec rv" id="projects">
+  <div class="sec-head">
+    <div class="sec-eyebrow">Ishlar</div>
+    <h2 class="sec-title">Mening <em>loyihalarim</em></h2>
+    <p class="sec-sub">Real muammolarni hal qilish uchun yaratilgan loyihalar</p>
+  </div>
+  <div class="proj-filters">
+    <button class="pf-btn active" data-f="all">Barchasi</button>
+    <button class="pf-btn" data-f="Web App">Web App</button>
+    <button class="pf-btn" data-f="Frontend">Frontend</button>
+    <button class="pf-btn" data-f="Tool">Tool</button>
+    <button class="pf-btn" data-f="Portfolio">Portfolio</button>
+  </div>
+  <div class="proj-grid">
+    <div class="proj-card rv" data-tur="Web App"><div class="proj-header"><span class="proj-tur">Web App</span><a href="#" class="proj-link-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div><div class="proj-name">E-Commerce Platform</div><p class="proj-desc">PHP + MySQL asosida to'liq onlayn savdo tizimi. Admin panel, mahsulot boshqaruvi, to'lov integratsiyasi va real-time buyurtma kuzatuvi.</p><div class="proj-techs"><span class="ptag">PHP</span><span class="ptag">MySQL</span><span class="ptag">JavaScript</span><span class="ptag">AJAX</span></div></div>
+    <div class="proj-card rv" data-tur="Frontend"><div class="proj-header"><span class="proj-tur">Frontend</span><a href="#" class="proj-link-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div><div class="proj-name">Weather Dashboard</div><p class="proj-desc">OpenWeather API bilan havo ma'lumotlari paneli. 7 kunlik prognoz, harorat grafigi va joylashuvни avtomatik aniqlash.</p><div class="proj-techs"><span class="ptag">JavaScript</span><span class="ptag">CSS3</span><span class="ptag">REST API</span><span class="ptag">Chart.js</span></div></div>
+    <div class="proj-card rv" data-tur="Tool"><div class="proj-header"><span class="proj-tur">Tool</span><a href="#" class="proj-link-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a></div><div class="proj-name">Task Manager</div><p class="proj-desc">Kuchli vazifalar boshqaruvi. Drag & drop interfeysi, notifikatsiyalar va sinxronizatsiya.</p><div class="proj-techs"><span class="ptag">JavaScript</span><span class="ptag">CSS3</span><span class="ptag">Firebase</span></div></div>
+  </div>
+</section>
+
+<div class="hdivide"></div>
+
+<section class="sec rv" id="timeline">
+  <div class="sec-head">
+    <div class="sec-eyebrow">Yo'l xaritasi</div>
+    <h2 class="sec-title">Dasturchi <em>bo'lish yo'li</em></h2>
+  </div>
+  <div class="timeline">
+    <div class="tl-item rv"><div class="tl-dot"></div><div class="tl-year">2022</div><div class="tl-name">Dasturlash boshlanishi</div><p class="tl-desc">HTML va CSS o'rganish. Birinchi statik sahifalar.</p></div>
+    <div class="tl-item rv"><div class="tl-dot"></div><div class="tl-year">2022</div><div class="tl-name">JavaScript</div><p class="tl-desc">DOM manipulyatsiya, eventlar, AJAX va API bilan ishlash.</p></div>
+    <div class="tl-item rv"><div class="tl-dot"></div><div class="tl-year">2023</div><div class="tl-name">PHP & MySQL</div><p class="tl-desc">Backend dasturlash, ma'lumotlar bazasi, CRUD operatsiyalar.</p></div>
+    <div class="tl-item rv"><div class="tl-dot"></div><div class="tl-year">2023</div><div class="tl-name">React Framework</div><p class="tl-desc">Komponent asosidagi frontend, state management, hooks.</p></div>
+    <div class="tl-item rv"><div class="tl-dot"></div><div class="tl-year">2024</div><div class="tl-name">Full Stack Loyihalar</div><p class="tl-desc">Frontend va backend birlashtirilgan to'liq ilovalar.</p></div>
+    <div class="tl-item rv"><div class="tl-dot"></div><div class="tl-year">2025</div><div class="tl-name">Professional Rivojlanish</div><p class="tl-desc">Node.js, MongoDB, DevOps asoslari va ochiq manba hissa.</p></div>
+  </div>
+</section>
+
+<div class="hdivide"></div>
+
+<section class="sec rv" id="services">
+  <div class="sec-head">
+    <div class="sec-eyebrow">Xizmatlar</div>
+    <h2 class="sec-title">Nima <em>qila olaman?</em></h2>
+    <p class="sec-sub">Sizning loyihangiz uchun qo'llab-quvvatlash</p>
+  </div>
+  <div class="svc-grid">
+    <div class="svc-card rv"><div class="svc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div><div class="svc-name">Web Sayt Yaratish</div><p class="svc-desc">Korxona, shaxsiy yoki portfolio saytlar. Tez, responsive va SEO-friendly.</p></div>
+    <div class="svc-card rv"><div class="svc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg></div><div class="svc-name">Backend Dasturlash</div><p class="svc-desc">PHP/Node.js API, ma'lumotlar bazasi arxitekturasi va server-side mantiq.</p></div>
+    <div class="svc-card rv"><div class="svc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg></div><div class="svc-name">Frontend UI/UX</div><p class="svc-desc">React bilan zamonaviy, chiroyli va foydalanuvchiga qulay interfeyslar.</p></div>
+    <div class="svc-card rv"><div class="svc-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div><div class="svc-name">Ma'lumotlar Bazasi</div><p class="svc-desc">MySQL/MongoDB loyihalash, optimizatsiya va migratsiya.</p></div>
+  </div>
+</section>
+
+<div class="hdivide"></div>
+
+<section class="sec rv" id="contact">
+  <div class="sec-head">
+    <div class="sec-eyebrow">Aloqa</div>
+    <h2 class="sec-title">Loyiha <em>bormi?</em></h2>
+    <p class="sec-sub">Xabar yuboring — 24 soat ichida javob beraman</p>
+  </div>
+  <div class="contact-outer">
+    <div class="contact-left">
+      <div class="contact-info-card">
+        <div class="ci-title">Bog'lanish <span>yo'llari</span></div>
+        <p class="ci-sub">Har qanday savol yoki taklif uchun yozing. Birgalikda ajoyib narsa yaratamiz.</p>
+        <div class="ci-row"><div class="ci-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div class="ci-label">Email</div><div class="ci-val"><a href="mailto:nusratbekjurayev@email.com">nusratbekjurayev@email.com</a></div></div></div>
+        <!-- <div class="ci-row"><div class="ci-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.63 19.79 19.79 0 01.01 2.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14v2.92z"/></svg></div><div><div class="ci-label">Telefon</div><div class="ci-val"><a href="tel:+998336421983">+998 33 642 19 83</a></div></div></div> -->
+        <div class="ci-row"><div class="ci-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.833.932z"/></svg></div><div><div class="ci-label">Telegram</div><div class="ci-val"><a href="https://t.me/only_jurayevv" target="_blank" rel="noopener">@only_jurayevv</a></div></div></div>
+        <div class="ci-row"><div class="ci-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="ci-label">Joylashuv</div><div class="ci-val">Buxoro, O'zbekiston</div></div></div>
+      </div>
+    </div>
+    <div class="form-card">
+      <div class="form-title">Xabar yuborish</div>
+      <p class="form-sub">Forma orqali yuboring — Telegram botimga darhol keladi</p>
+      <div class="form-2col">
+        <div class="form-row"><label>Ismingiz *</label><input id="f-name" type="text" placeholder="Ism Familiya" autocomplete="name"></div>
+        <div class="form-row"><label>Telefon *</label><input id="f-phone" type="tel" placeholder="+998 XX XXX XX XX" autocomplete="tel"></div>
+      </div>
+      <div class="form-row"><label>Email <span style="color:var(--txt3);font-weight:400;text-transform:none;letter-spacing:0">(ixtiyoriy)</span></label><input id="f-email" type="email" placeholder="email@example.com" autocomplete="email"></div>
+      <div class="form-row"><label>Xabaringiz *</label><textarea id="f-msg" rows="4" placeholder="Loyiha haqida batafsil yozing..."></textarea></div>
+      <button class="form-submit" id="f-btn">Xabar yuborish →</button>
+      <div class="toast" id="f-toast"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">&lt;<span>Nusratbek Jurayev</span> /&gt;</div>
+  <div class="footer-links">
+    <a href="https://t.me/only_jurayevv" target="_blank" rel="noopener">Telegram</a>
+    <!-- <a href="tel:+998">Telefon</a> -->
+    <a href="mailto:nusratbekjurayev@email.com">Email</a>
+  </div>
+  <div class="footer-copy">2025 · Full Stack Developer</div>
+</footer>
+
+<script>
+/* =========================================
+   1. HIMOYALASH (Ctrl+U, F12, O'ng tugmani bloklash)
+========================================= */
+// document.addEventListener('contextmenu', e => e.preventDefault());
+// document.onkeydown = function(e) {
+//   if (e.keyCode == 123 || 
+//      (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67)) || 
+//      (e.ctrlKey && e.keyCode == 85)) { 
+//     return false;
+//   }
+// };
+
+/* =========================================
+   2. TELEFON RAQAM FORMATI (+998 90-123-45-67)
+========================================= */
+const phoneInput = document.getElementById('f-phone');
+if (phoneInput) {
+  if (!phoneInput.value.startsWith('+998 ')) {
+    phoneInput.value = '+998 ';
+  }
+
+  phoneInput.addEventListener('input', () => {
+    let value = phoneInput.value;
+    
+    if (!value.startsWith('+998 ')) {
+      phoneInput.value = '+998 ';
+      return;
+    }
+
+    // Faqat raqamlarni ajratib olish
+    let digits = value.slice(5).replace(/\D/g, '');
+    
+    if (digits.length > 9) {
+      digits = digits.slice(0, 9);
+    }
+
+    // Formatlash: 90-123-45-67
+    let formatted = '';
+    if (digits.length > 0) {
+      formatted += digits.slice(0, 2); // 90
+    }
+    if (digits.length > 2) {
+      formatted += '-' + digits.slice(2, 5); // 90-123
+    }
+    if (digits.length > 5) {
+      formatted += '-' + digits.slice(5, 7); // 90-123-45
+    }
+    if (digits.length > 7) {
+      formatted += '-' + digits.slice(7, 9); // 90-123-45-67
+    }
+
+    phoneInput.value = '+998 ' + formatted;
+  });
+
+  phoneInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Backspace' && phoneInput.value.length <= 5) {
+      e.preventDefault();
+    }
+  });
+}
+
+/* =========================================
+   3. GLOW ORB (Sichqoncha orqasidan ergashish)
+========================================= */
+const orb = document.getElementById('glow-orb');
+if(window.matchMedia('(hover:hover)').matches && orb){
+  document.addEventListener('mousemove', e => { 
+    orb.style.left = e.clientX + 'px'; 
+    orb.style.top = e.clientY + 'px'; 
+  });
+} else if (orb) { 
+  orb.style.display = 'none'; 
+}
+
+/* =========================================
+   4. MOBILE NAV (Mobil menyu)
+========================================= */
+const navToggle = document.getElementById('navToggle');
+const drawer    = document.getElementById('mobileDrawer');
+if (navToggle && drawer) {
+  navToggle.addEventListener('click', () => {
+    const open = drawer.classList.toggle('open');
+    navToggle.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  document.querySelectorAll('.mob-link').forEach(a => {
+    a.addEventListener('click', () => {
+      drawer.classList.remove('open');
+      navToggle.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+}
+
+/* =========================================
+   5. TYPING (Matn yozilish effekti)
+========================================= */
+const roles = ['Telegram bot developer', 'React Developer', 'Frontend Developer'];
+let ri = 0, ci = 0, del = false;
+const el = document.getElementById('typed-role');
+if (el) {
+  setInterval(() => {
+    const t = roles[ri];
+    if(!del){ 
+      el.textContent = t.slice(0, ++ci); 
+      if(ci === t.length) setTimeout(() => { del = true; }, 1600); 
+    }
+    else { 
+      el.textContent = t.slice(0, --ci); 
+      if(ci === 0){ del = false; ri = (ri + 1) % roles.length; } 
+    }
+  }, 75);
+}
+
+/* =========================================
+   6. REVEAL (Scroll qilinganda ochilish)
+========================================= */
+const rv = new IntersectionObserver(es => {
+  es.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: .07 });
+document.querySelectorAll('.rv').forEach(e => rv.observe(e));
+
+/* =========================================
+   7. SKILL BARS (Foizlar to'lishi)
+========================================= */
+const sbObs = new IntersectionObserver(es => {
+  es.forEach(e => { 
+    if(e.isIntersecting){ 
+      e.target.style.width = e.target.dataset.w + '%'; 
+      sbObs.unobserve(e.target); 
+    } 
+  });
+}, { threshold: .5 });
+document.querySelectorAll('.skill-bar').forEach(b => sbObs.observe(b));
+
+/* =========================================
+   8. FILTER (Loyihalarni saralash)
+========================================= */
+document.querySelectorAll('.pf-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.pf-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.f;
+    document.querySelectorAll('.proj-card').forEach(c => { 
+      c.style.display = (f === 'all' || c.dataset.tur === f) ? '' : 'none'; 
+    });
+  });
+});
+
+/* =========================================
+   9. SMOOTH SCROLL (Menyu orqali silliq o'tish)
+========================================= */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const targetId = a.getAttribute('href');
+    if (targetId === '#') return;
+    const t = document.querySelector(targetId);
+    if(t){ 
+      e.preventDefault(); 
+      t.scrollIntoView({ behavior: 'smooth' }); 
+    }
+  });
+});
+
+/* =========================================
+   10. TELEGRAM BOTGA YUBORISH (Tekshirilgan)
+========================================= */
+const fBtn = document.getElementById('f-btn');
+if (fBtn) {
+  fBtn.addEventListener('click', async () => {
+    const name    = document.getElementById('f-name').value.trim();
+    const phone   = document.getElementById('f-phone').value.trim();
+    const email   = document.getElementById('f-email').value.trim();
+    const message = document.getElementById('f-msg').value.trim();
+    const btn     = document.getElementById('f-btn');
+    const toast   = document.getElementById('f-toast');
+
+    toast.style.display = 'none';
+    
+    if(!name || !phone || !message || phone === '+998 '){
+      toast.className = 'toast err';
+      toast.textContent = "Iltimos, ism, telefon raqam va xabar maydonlarini to'ldiring.";
+      toast.style.display = 'block';
+      return;
+    }
+    
+    if(email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+      toast.className = 'toast err';
+      toast.textContent = "Iltimos, to'g'ri email manzil kiriting.";
+      toast.style.display = 'block';
+      return;
+    }
+
+    // To'liq raqam kiritilganini tekshirish (+998 90-123-45-67 uzunligi roppa-rosa 17 belgi)
+    if(phone.length < 17){
+      toast.className = 'toast err';
+      toast.textContent = "Iltimos, telefon raqamingizni to'liq kiriting.";
+      toast.style.display = 'block';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Yuborilmoqda...';
+
+    const BOT_TOKEN = '8830449608:AAHr_LKlzXvWfHa52aRnyR3KtbUIXVEmD_o'; 
+    const CHAT_ID = '7535256198'; 
+    
+    const textMessage = `📩 Yangi xabar:\n\n👤 Ism: ${name}\n📞 Telefon: ${phone}\n📧 Email: ${email || "Kiritilmadi"}\n💬 Xabar: ${message}`;
+    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(textMessage)}`;
+
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      
+      if(data.ok){
+        toast.className = 'toast ok';
+        toast.textContent = 'Xabar yuborildi! Tez orada javob beraman.';
+        ['f-name','f-phone','f-email','f-msg'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.value = (id === 'f-phone') ? '+998 ' : '';
+        });
+      } else { 
+        throw new Error('Telegram bot xatosi'); 
+      }
+    } catch(err) {
+      toast.className = 'toast err';
+      toast.textContent = '❌ Xatolik yuz berdi. Botga /start bosilganini tekshiring yoki @only_jurayevv ga yozing.';
+    }
+    
+    toast.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Xabar yuborish →';
+  });
+}
+</script>
+</body>
+</html>
