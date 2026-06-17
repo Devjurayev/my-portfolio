@@ -428,14 +428,14 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2.
 /* =========================================
    1. HIMOYALASH (Ctrl+U, F12, O'ng tugmani bloklash)
 ========================================= */
-// document.addEventListener('contextmenu', e => e.preventDefault());
-// document.onkeydown = function(e) {
-//   if (e.keyCode == 123 || 
-//      (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67)) || 
-//      (e.ctrlKey && e.keyCode == 85)) { 
-//     return false;
-//   }
-// };
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.onkeydown = function(e) {
+  if (e.keyCode == 123 || 
+     (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67)) || 
+     (e.ctrlKey && e.keyCode == 85)) { 
+    return false;
+  }
+};
 
 /* =========================================
    2. TELEFON RAQAM FORMATI (+998 90-123-45-67)
